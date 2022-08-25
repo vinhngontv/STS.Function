@@ -11,7 +11,7 @@ public static class CosmosDBTrigger
     [FunctionName("CosmosDBTrigger")]
     public static async Task RunAsync([CosmosDBTrigger(
             databaseName: "sts",
-            collectionName: "User",
+            collectionName: "user",
             ConnectionStringSetting = "CosmosDBConnectionString",
             MaxItemsPerInvocation = 1,
             LeaseCollectionName = "leases")]

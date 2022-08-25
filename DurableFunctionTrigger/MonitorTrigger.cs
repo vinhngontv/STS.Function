@@ -12,31 +12,62 @@ using Microsoft.Extensions.Logging;
 
 namespace STS.Function.DurableFunctionTrigger;
 
-public static class MonitorTrigger
+public class MonitorTrigger
 {
     [FunctionName("MonitorJobStatus")]
-    public static async Task Run(
-        [OrchestrationTrigger] IDurableOrchestrationContext context)
+    public async Task Run(
+        [OrchestrationTrigger] IDurableOrchestrationContext context, ILogger log)
     {
-        int jobId = context.GetInput<int>();
+        // int jobId = context.GetInput<int>();
         int pollingInterval = GetPollingInterval();
         DateTime expiryTime = GetExpiryTime();
 
+        var i = 1;
         while (context.CurrentUtcDateTime < expiryTime)
         {
-            var jobStatus = await context.CallActivityAsync<string>("GetJobStatus", jobId);
+            var jobStatus = await context.CallActivityAsync<string>("GetJobStatus", i);
+            
             if (jobStatus == "Completed")
             {
                 // Perform an action when a condition is met.
-                await context.CallActivityAsync("SendAlert", machineId);
+                await context.CallActivityAsync("SendAlert", null);
                 break;
             }
 
             // Orchestration sleeps until this time.
-            var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval);
-            await context.CreateTimer(nextCheck, CancellationToken.None);
+            // var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval);
+            // await context.CreateTimer(nextCheck, CancellationToken.None);
+            i++;
         }
 
         // Perform more work here, or let the orchestration end.
+    }
+    
+    [FunctionName("GetJobStatus")]
+    public string GetJobStatus([ActivityTrigger] int num, ILogger log)
+    {
+        var test = num % 8;
+        var jobStatus = test == 0 ?"Completed" : "Running";
+        
+        log.LogInformation($"Process is {jobStatus} - num: {num}");
+
+        return jobStatus;
+    }
+    
+    [FunctionName("SendAlert")]
+    public string SendAlert([ActivityTrigger] string num, ILogger log)
+    {
+        log.LogInformation($"=====SendAlert");
+        return "SendAlert";
+    }
+
+    private int GetPollingInterval()
+    {
+        return 20;
+    }
+
+    private DateTime GetExpiryTime()
+    {
+        return DateTime.UtcNow.AddMinutes(10);
     }
 }

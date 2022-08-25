@@ -8,6 +8,7 @@ namespace STS.Function;
 
 public static class TimerTrigger
 {
+    [Disable]
     [FunctionName("TimerTrigger")]
     public static async Task RunAsync([TimerTrigger("5,8,10 * * * * *")] TimerInfo myTimer, ILogger log)
     {
