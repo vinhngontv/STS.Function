@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "STS.Function": {
+    "Catalog.API": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7254",
+      "commandLineArgs": "--port 7043",
       "launchBrowser": false
     }
   }
