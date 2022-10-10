@@ -1,0 +1,9 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Proxies" type="CompoundRunConfigurationType">
+    <toRun name="Basket.API" type="AzureFunctionsHost" />
+    <toRun name="Catalog.API" type="AzureFunctionsHost" />
+    <toRun name="Ordering.API" type="AzureFunctionsHost" />
+    <toRun name="ProxyApp" type="AzureFunctionsHost" />
+    <method v="2" />
+  </configuration>
+</component>
