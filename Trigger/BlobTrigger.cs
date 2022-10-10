@@ -7,6 +7,7 @@ namespace STS.Function;
 
 public static class BlobTrigger
 {
+    [Disable]
     [FunctionName("BlobTrigger")]
     public static async Task RunAsync([BlobTrigger("%File%/{name}", Connection = "AzureWebJobsStorage")] Stream myBlob,
         string name, ILogger log)

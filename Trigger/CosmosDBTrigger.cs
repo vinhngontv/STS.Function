@@ -8,6 +8,7 @@ namespace STS.Function;
 
 public static class CosmosDBTrigger
 {
+    [Disable]
     [FunctionName("CosmosDBTrigger")]
     public static async Task RunAsync([CosmosDBTrigger(
             databaseName: "sts",

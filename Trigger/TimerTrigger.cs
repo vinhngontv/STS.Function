@@ -8,9 +8,8 @@ namespace STS.Function;
 
 public static class TimerTrigger
 {
-    [Disable]
     [FunctionName("TimerTrigger")]
-    public static async Task RunAsync([TimerTrigger("5,8,10 * * * * *")] TimerInfo myTimer, ILogger log)
+    public static async Task RunAsync([TimerTrigger("%TimerCron%")] TimerInfo myTimer, ILogger log)
     {
         log.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
         

@@ -17,9 +17,11 @@ public static class CommonTrigger
         ILogger log)
     {
         // Function input comes from the request content.
-        var instanceId = await starter.StartNewAsync("AddFromQueue", null);
-        // string instanceId = await starter.StartNewAsync("FanInFanOutTrigger", null);
-
+        var instanceId = await starter.StartNewAsync("ChainingTrigger");
+        // var instanceId = await starter.StartNewAsync("FanInFanOutTrigger");
+        // var instanceId = await starter.StartNewAsync("MonitorJobStatus");
+        // var instanceId = await starter.StartNewAsync("ApprovalWorkflow");
+    
         log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
 
         return starter.CreateCheckStatusResponse(req, instanceId);

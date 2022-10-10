@@ -6,6 +6,7 @@ namespace STS.Function;
 
 public static class QueueTrigger
 {
+    [Disable]
     [FunctionName("QueueTrigger")]
     [StorageAccount("QueueTriggerStorage")]
     public static async Task RunAsync([QueueTrigger("%QueueName%")] string myQueueItem, ILogger log)
